@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "username": "demo",
+    "email": "demo@example.com",
+    "password": "$2b$10$/orjwdNHFPYTtMYgjJ53Euaq0Ej2tOh41WssVcyR2AOu2buE59kEa"
+  },
+  {
+    "id": 2,
+    "username": "bb",
+    "email": "bb@gmail.com",
+    "password": "$2b$10$eJBeS4MruniNUL7a2SKwBulQtz6IIKgPy7fvKbhOiFhrNRufDZacm"
+  }
+]
