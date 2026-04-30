@@ -71,7 +71,7 @@ body {
   transition: opacity .2s;
 }
 .btn:hover { opacity: .88; }
-.btn-primary { background: #e94560; color: #fff; }
+.btn-primary { background: #e94560; color: black; }
 
 .auth-link { margin-top: 1.2rem; text-align: center; font-size: .9rem; color: #666; }
 .auth-link a { color: #e94560; text-decoration: none; font-weight: 600; }
