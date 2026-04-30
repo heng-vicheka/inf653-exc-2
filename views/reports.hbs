@@ -1,0 +1,46 @@
+<div class="dashboard-header">
+  <h1>Reports</h1>
+  <p>View your fuel consumption reports below.</p>
+</div>
+
+<div class="dashboard-grid">
+  <section class="card summary-card">
+    <div class="card-heading">
+      <h2>Weekly Fuel Expenditure</h2>
+      <p>Fuel cost totals grouped by week.</p>
+    </div>
+    {{#if records.weeklySummary.length}}
+      <ul class="summary-list">
+        {{#each records.weeklySummary}}
+          <li>
+            <span class="summary-label">Week of</span>
+            <strong>{{weekStart}}</strong>
+            <span class="summary-amount">${{totalCost}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p class="empty-state">No weekly spending data available.</p>
+    {{/if}}
+  </section>
+
+  <section class="card summary-card">
+    <div class="card-heading">
+      <h2>Monthly Fuel Expenditure</h2>
+      <p>Fuel cost totals grouped by month.</p>
+    </div>
+    {{#if records.monthlySummary.length}}
+      <ul class="summary-list">
+        {{#each records.monthlySummary}}
+          <li>
+            <span class="summary-label">Month</span>
+            <strong>{{month}}</strong>
+            <span class="summary-amount">${{totalCost}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p class="empty-state">No monthly spending data available.</p>
+    {{/if}}
+  </section>
+</div>

@@ -36,7 +36,7 @@ function createRecord(data) {
   const nextId = records.length ? Math.max(...records.map((r) => r.id)) + 1 : 1;
   const record = {
     id: nextId,
-    userId: data.userId,
+    userId: Number(data.userId),
     date: data.date,
     vehicleType: data.vehicleType,
     liters: Number(data.liters),
@@ -63,6 +63,12 @@ function deleteRecord(id, userId) {
   if (index === -1) return false;
   records.splice(index, 1);
   return true;
+}
+
+function getRecordsByUser(userId) {
+  return records
+    .filter((record) => record.userId === Number(userId))
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
 function computeKmPerLiter(record) {
@@ -104,7 +110,7 @@ module.exports = {
   createRecord,
   updateRecord,
   deleteRecord,
-  getRecordsByUserId,
+  getRecordsByUser,
   computeKmPerLiter,
   summarizeByWeek,
   summarizeByMonth
