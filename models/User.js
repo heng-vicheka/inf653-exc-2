@@ -21,7 +21,7 @@ const UserModel = {
   },
 
   findById(id) {
-    return users.find((u) => u.id === id) || null;
+    return users.find((u) => u.id === Number(id)) || null;
   },
 
   async create({ username, email, password }) {

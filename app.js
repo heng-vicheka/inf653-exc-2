@@ -8,6 +8,7 @@ const csrf = require('csurf');
 
 const authRoutes = require('./routes/authRoutes');
 const apiAuthRoutes = require('./routes/apiAuthRoutes');
+const RecordModel = require('./models/recordModel');
 const { requireSession } = require('./middleware/sessionAuth');
 
 const app = express();
@@ -60,9 +61,36 @@ app.use('/', authRoutes);
 
 // Protected web route — teammates will add fuel-record routes here
 app.get('/dashboard', requireSession, (req, res) => {
+  const userId = Number(req.session.user.id);
+  const list = RecordModel.getRecordsByUser(userId).map((record) => ({
+    ...record,
+    kmPerLiter: RecordModel.computeKmPerLiter(record),
+  }));
+
   res.render('dashboard', {
     title: 'Dashboard',
     csrfToken: req.csrfToken(),
+    records: {
+      list,
+      weeklySummary: RecordModel.summarizeByWeek(list),
+      monthlySummary: RecordModel.summarizeByMonth(list),
+    },
+  });
+});
+
+app.get('/reports', requireSession, (req, res) => {
+  const userId = Number(req.session.user.id);
+  const list = RecordModel.getRecordsByUser(userId).map((record) => ({
+    ...record,
+    kmPerLiter: RecordModel.computeKmPerLiter(record),
+  }));
+
+  res.render('reports', {
+    title: 'Reports',
+    records: {
+      weeklySummary: RecordModel.summarizeByWeek(list),
+      monthlySummary: RecordModel.summarizeByMonth(list),
+    },
   });
 });
 
