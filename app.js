@@ -8,7 +8,9 @@ const csrf = require('csurf');
 
 const authRoutes = require('./routes/authRoutes');
 const apiAuthRoutes = require('./routes/apiAuthRoutes');
+const recordRoutes = require('./routes/recordRoutes');
 const { requireSession } = require('./middleware/sessionAuth');
+const recordModel = require('./models/recordModel');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +23,9 @@ app.engine(
     defaultLayout: 'main',
     layoutsDir: path.join(__dirname, 'views/layouts'),
     partialsDir: path.join(__dirname, 'views/partials'),
+    helpers: {
+      eq: (a, b) => a === b,
+    },
   })
 );
 app.set('view engine', 'hbs');
@@ -57,12 +62,16 @@ app.use('/api', apiAuthRoutes);
 // ── Web Routes (CSRF applied) ─────────────────────────────────────────────────
 app.use(csrfProtection);
 app.use('/', authRoutes);
+app.use('/records', requireSession, recordRoutes);
 
 // Protected web route — teammates will add fuel-record routes here
 app.get('/dashboard', requireSession, (req, res) => {
+  const userId = req.session.user.id;
+  const userRecords = recordModel.getRecordsByUserId(userId);
   res.render('dashboard', {
     title: 'Dashboard',
     csrfToken: req.csrfToken(),
+    records: userRecords
   });
 });
 
