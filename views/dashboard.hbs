@@ -4,9 +4,14 @@
     <p>Welcome back, <strong>{{session.user.username}}</strong>! Manage your fuel records below.</p>
   </div>
   <a href="/records/create" class="btn btn-primary">+ New Record</a>
+  <div>
+    <h1>Dashboard</h1>
+    <p>Welcome back, <strong>{{session.user.username}}</strong>! Manage your fuel records below.</p>
+  </div>
+  <a href="/records/create" class="btn btn-primary">+ New Record</a>
 </div>
 
-{{#if records}}
+{{#if records.list.length}}
   <div class="records-table-container">
     <table class="records-table">
       <thead>
@@ -15,17 +20,19 @@
           <th>Vehicle Type</th>
           <th>Liters</th>
           <th>Distance (km)</th>
+          <th>Km/L</th>
           <th>Total Cost</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {{#each records}}
+        {{#each records.list}}
           <tr>
             <td>{{this.date}}</td>
             <td>{{this.vehicleType}}</td>
             <td>{{this.liters}}</td>
             <td>{{this.distanceKm}}</td>
+            <td>{{this.kmPerLiter}}</td>
             <td>${{this.totalCost}}</td>
             <td>
               <a href="/records/{{this.id}}/edit" class="btn btn-sm btn-info">Update</a>
@@ -39,6 +46,7 @@
       </tbody>
     </table>
   </div>
+  
 {{else}}
   <div class="placeholder-card">
     <p>No fuel records yet. <a href="/records/create">Create your first record</a></p>
