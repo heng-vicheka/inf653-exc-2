@@ -62,6 +62,11 @@ app.use('/api', apiAuthRoutes);
 
 // ── Web Routes (CSRF applied) ─────────────────────────────────────────────────
 app.use(csrfProtection);
+// Expose CSRF token to all templates (layout uses it for logout form)
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 app.use('/', authRoutes);
 app.use('/records', requireSession, recordRoutes);
 
@@ -93,6 +98,7 @@ app.get('/reports', requireSession, (req, res) => {
 
   res.render('reports', {
     title: 'Reports',
+    csrfToken: req.csrfToken(),
     records: {
       weeklySummary: RecordModel.summarizeByWeek(list),
       monthlySummary: RecordModel.summarizeByMonth(list),
