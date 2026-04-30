@@ -1,0 +1,47 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>Edit Fuel Record</h1>
+    <p>Update your fuel record information.</p>
+  </div>
+
+  <form method="POST" action="/records/{{record.id}}" class="form-group">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <div class="form-field">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" value="{{record.date}}" required>
+    </div>
+
+    <div class="form-field">
+      <label for="vehicleType">Vehicle Type:</label>
+      <select id="vehicleType" name="vehicleType" required>
+        <option value="">Select vehicle type</option>
+        <option value="Car" {{#if (eq record.vehicleType "Car")}}selected{{/if}}>Car</option>
+        <option value="Motorcycle" {{#if (eq record.vehicleType "Motorcycle")}}selected{{/if}}>Motorcycle</option>
+        <option value="Truck" {{#if (eq record.vehicleType "Truck")}}selected{{/if}}>Truck</option>
+        <option value="Bus" {{#if (eq record.vehicleType "Bus")}}selected{{/if}}>Bus</option>
+        <option value="Other" {{#if (eq record.vehicleType "Other")}}selected{{/if}}>Other</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="liters">Liters:</label>
+      <input type="number" id="liters" name="liters" step="0.1" min="0" value="{{record.liters}}" required>
+    </div>
+
+    <div class="form-field">
+      <label for="distanceKm">Distance (km):</label>
+      <input type="number" id="distanceKm" name="distanceKm" step="0.1" min="0" value="{{record.distanceKm}}" required>
+    </div>
+
+    <div class="form-field">
+      <label for="totalCost">Total Cost ($):</label>
+      <input type="number" id="totalCost" name="totalCost" step="0.01" min="0" value="{{record.totalCost}}" required>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update Record</button>
+      <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

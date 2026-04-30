@@ -100,6 +100,10 @@ function summarizeByMonth(recordsList) {
   return Object.entries(summary).map(([month, amount]) => ({ month, totalCost: Number(amount.toFixed(2)) })).sort((a, b) => a.month < b.month ? 1 : -1);
 }
 
+function getRecordsByUserId(userId) {
+  return records.filter((record) => record.userId === Number(userId));
+}
+
 module.exports = {
   records,
   findRecordById,

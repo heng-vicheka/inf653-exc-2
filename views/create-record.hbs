@@ -1,0 +1,47 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>Create New Fuel Record</h1>
+    <p>Add a new fuel record to track your vehicle's fuel consumption.</p>
+  </div>
+
+  <form method="POST" action="/records" class="form-group">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <div class="form-field">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
+    </div>
+
+    <div class="form-field">
+      <label for="vehicleType">Vehicle Type:</label>
+      <select id="vehicleType" name="vehicleType" required>
+        <option value="">Select vehicle type</option>
+        <option value="Car">Car</option>
+        <option value="Motorcycle">Motorcycle</option>
+        <option value="Truck">Truck</option>
+        <option value="Bus">Bus</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="liters">Liters:</label>
+      <input type="number" id="liters" name="liters" step="0.1" min="0" required>
+    </div>
+
+    <div class="form-field">
+      <label for="distanceKm">Distance (km):</label>
+      <input type="number" id="distanceKm" name="distanceKm" step="0.1" min="0" required>
+    </div>
+
+    <div class="form-field">
+      <label for="totalCost">Total Cost ($):</label>
+      <input type="number" id="totalCost" name="totalCost" step="0.01" min="0" required>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Create Record</button>
+      <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
