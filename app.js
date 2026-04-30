@@ -8,7 +8,7 @@ const csrf = require('csurf');
 
 const authRoutes = require('./routes/authRoutes');
 const apiAuthRoutes = require('./routes/apiAuthRoutes');
-const recordRoutes = require('./routes/recordRoutes');
+const RecordModel = require('./models/recordModel');
 const { requireSession } = require('./middleware/sessionAuth');
 const recordModel = require('./models/recordModel');
 
@@ -67,9 +67,9 @@ app.use('/records', requireSession, recordRoutes);
 // Protected web route — teammates will add fuel-record routes here
 app.get('/dashboard', requireSession, (req, res) => {
   const userId = Number(req.session.user.id);
-  const list = recordModel.getRecordsByUser(userId).map((record) => ({
+  const list = RecordModel.getRecordsByUser(userId).map((record) => ({
     ...record,
-    kmPerLiter: recordModel.computeKmPerLiter(record),
+    kmPerLiter: RecordModel.computeKmPerLiter(record),
   }));
 
   res.render('dashboard', {
@@ -77,24 +77,24 @@ app.get('/dashboard', requireSession, (req, res) => {
     csrfToken: req.csrfToken(),
     records: {
       list,
-      weeklySummary: recordModel.summarizeByWeek(list),
-      monthlySummary: recordModel.summarizeByMonth(list),
+      weeklySummary: RecordModel.summarizeByWeek(list),
+      monthlySummary: RecordModel.summarizeByMonth(list),
     },
   });
 });
 
 app.get('/reports', requireSession, (req, res) => {
   const userId = Number(req.session.user.id);
-  const list = recordModel.getRecordsByUser(userId).map((record) => ({
+  const list = RecordModel.getRecordsByUser(userId).map((record) => ({
     ...record,
-    kmPerLiter: recordModel.computeKmPerLiter(record),
+    kmPerLiter: RecordModel.computeKmPerLiter(record),
   }));
 
   res.render('reports', {
     title: 'Reports',
     records: {
-      weeklySummary: recordModel.summarizeByWeek(list),
-      monthlySummary: recordModel.summarizeByMonth(list),
+      weeklySummary: RecordModel.summarizeByWeek(list),
+      monthlySummary: RecordModel.summarizeByMonth(list),
     },
   });
 });
