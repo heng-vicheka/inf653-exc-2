@@ -8,6 +8,7 @@ const csrf = require('csurf');
 
 const authRoutes = require('./routes/authRoutes');
 const apiAuthRoutes = require('./routes/apiAuthRoutes');
+const recordRoutes = require('./routes/recordRoutes');
 const RecordModel = require('./models/recordModel');
 const { requireSession } = require('./middleware/sessionAuth');
 const recordModel = require('./models/recordModel');
