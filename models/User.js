@@ -1,15 +1,20 @@
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 
-// In-memory store
-const users = [
-  {
-    id: 1,
-    username: 'demo',
-    email: 'demo@example.com',
-    password: bcrypt.hashSync('password123', 10),
-  },
-];
-let nextId = 2;
+const DATA_FILE = path.join(__dirname, 'users.json');
+
+function loadUsers() {
+  if (!fs.existsSync(DATA_FILE)) return [];
+  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+}
+
+function saveUsers(users) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(users, null, 2));
+}
+
+let users = loadUsers();
+let nextId = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
 
 const UserModel = {
   findByUsername(username) {
@@ -28,6 +33,7 @@ const UserModel = {
     const hashed = await bcrypt.hash(password, 10);
     const user = { id: nextId++, username, email, password: hashed };
     users.push(user);
+    saveUsers(users);
     return user;
   },
 
